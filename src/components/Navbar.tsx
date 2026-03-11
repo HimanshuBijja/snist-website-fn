@@ -4,22 +4,34 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import { Link as ScrollLink, animateScroll } from 'react-scroll'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 import { HiOutlineCloud } from 'react-icons/hi2'
 import { GoHome, GoCodeOfConduct } from 'react-icons/go'
 import { FaBars, FaTimes } from 'react-icons/fa'
 import { FiBook, FiEdit } from 'react-icons/fi'
-import { MdOutlineEmojiEvents, MdOutlineWorkOutline, MdGroupAdd } from 'react-icons/md'
+import {
+    MdOutlineEmojiEvents,
+    MdOutlineWorkOutline,
+    MdGroupAdd,
+} from 'react-icons/md'
 import { motion } from 'framer-motion'
 
-import { ANNOUNCEMENT_TEXT, ANNOUNCEMENT_GRAD_COLOR } from '@/dispositions/general'
+import {
+    ANNOUNCEMENT_TEXT,
+    ANNOUNCEMENT_GRAD_COLOR,
+} from '@/dispositions/general'
 
 const logo = '/assets/bits/sreenidhi-logo.webp'
 
 export default function Navbar(): React.ReactNode {
+    const pathname = usePathname()
     const [nav, setNav] = useState(false)
     const [announceDismissed, setAnnounceDismissed] = useState(false)
     const handleClick = () => setNav(!nav)
+
+    // Hide the site navbar on admin routes (admin has its own nav)
+    if (pathname.startsWith('/admin')) return null
 
     return (
         <div className='z-50 flex flex-col fixed w-full'>
@@ -39,10 +51,10 @@ export default function Navbar(): React.ReactNode {
                         !announceDismissed
                             ? { opacity: 1, translateY: '0%' }
                             : {
-                                opacity: 0,
-                                translateY: '-100%',
-                                position: 'absolute'
-                            }
+                                  opacity: 0,
+                                  translateY: '-100%',
+                                  position: 'absolute',
+                              }
                     }
                     transition={{ duration: 1, ease: 'easeOut' }}
                 >
@@ -57,8 +69,14 @@ export default function Navbar(): React.ReactNode {
                         playsInline
                         className='-z-10 absolute w-full opacity-5 group-hover/announcement_bar:opacity-20 transition-all duration-500 pointer-events-none object-cover'
                     >
-                        <source src='/assets/bits/diagonal_slowglide_overlay.webm' type='video/webm' />
-                        <source src='/assets/bits/diagonal_slowglide_overlay.mp4' type='video/mp4' />
+                        <source
+                            src='/assets/bits/diagonal_slowglide_overlay.webm'
+                            type='video/webm'
+                        />
+                        <source
+                            src='/assets/bits/diagonal_slowglide_overlay.mp4'
+                            type='video/mp4'
+                        />
                     </video>
 
                     <p className='z-10 right-4 absolute text-neutral-600 text-xs font-semibold select-none animate-pulse'>
@@ -145,7 +163,10 @@ export default function Navbar(): React.ReactNode {
                 </ul>
 
                 {/* Mobile Menu Button */}
-                <div onClick={handleClick} className='md:hidden z-10 min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer'>
+                <div
+                    onClick={handleClick}
+                    className='md:hidden z-10 min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer'
+                >
                     {!nav ? <FaBars size={20} /> : <FaTimes size={20} />}
                 </div>
 
@@ -208,10 +229,7 @@ export default function Navbar(): React.ReactNode {
 
                         <div className='text-2xl text-white font-semibold flex items-center min-h-[44px] active:scale-90 hover:scale-105 transition duration-300 ease-out'>
                             <GoCodeOfConduct className='my-auto mr-2 text-2xl' />
-                            <a
-                                href='/join'
-                                onMouseUp={handleClick}
-                            >
+                            <a href='/join' onMouseUp={handleClick}>
                                 Join Us!
                             </a>
                         </div>
