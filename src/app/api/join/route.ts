@@ -16,7 +16,7 @@ const joinClubSchema = z.object({
         .min(10, 'Roll number must be at least 10 characters')
         .regex(/^[A-Z0-9]+$/i, 'Roll number must be alphanumeric'),
     email: z.string().email(),
-    phone: z.string().min(10),
+    phone: z.string().regex(/^(\+91[\s-]?)?[6-9]\d{9}$/, 'Enter a valid 10-digit Indian mobile number'),
     department: z.string(), // accepting string for enum
     year: z.string(),
     motivation: z.string().min(20).max(500),
@@ -44,11 +44,11 @@ export async function POST(request: Request) {
         }
 
         try {
-            const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
-            const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+            const backendUrl = process.env.BACKEND_URL || 'http://localhost:5000';
+            const apiKey = process.env.API_KEY;
 
             if (!apiKey) {
-                console.error('NEXT_PUBLIC_API_KEY not configured');
+                console.error('API_KEY not configured');
                 throw new Error('API configuration error');
             }
 
