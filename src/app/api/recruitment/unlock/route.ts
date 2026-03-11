@@ -26,11 +26,11 @@ export async function POST(request: Request) {
         const validatedData = recruitmentUnlockSchema.parse(body);
 
         // Get backend URL and API key from environment
-        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
-        const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+        const backendUrl = process.env.BACKEND_URL || 'http://localhost:5000';
+        const apiKey = process.env.API_KEY;
 
         if (!apiKey) {
-            console.error('NEXT_PUBLIC_API_KEY not configured');
+            console.error('API_KEY not configured');
             return NextResponse.json(
                 {
                     success: false,
