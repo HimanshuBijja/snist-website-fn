@@ -67,7 +67,7 @@ export default function Navbar(): React.ReactNode {
                         loop
                         muted
                         playsInline
-                        className='-z-10 absolute w-full opacity-5 group-hover/announcement_bar:opacity-20 transition-all duration-500 pointer-events-none object-cover'
+                        className='-z-10 absolute w-full opacity-5 group-hover/announcement_bar:opacity-20 transition-all duration-500 pointer-events-none h-20 object-cover'
                     >
                         <source
                             src='/assets/bits/diagonal_slowglide_overlay.webm'
