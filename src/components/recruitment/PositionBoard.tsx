@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import FlowingMenu, { MenuItemData } from './FlowingMenu';
 import { AnimatePresence, motion } from 'framer-motion';
 import { RECRUITMENT_CATEGORIES } from '@/dispositions/recruitment';
@@ -15,11 +15,17 @@ interface PositionBoardProps {
 export default function PositionBoard({ categories = RECRUITMENT_CATEGORIES, onSelectProblem }: PositionBoardProps) {
     const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
-    const handleBack = () => {
+    const handleBack = useCallback(() => {
         setExpandedCategory(null);
-    };
+    }, []);
 
-    const recruitmentItems: MenuItemData[] = [
+    const recruitmentItems: MenuItemData[] = useMemo(() => [
+        {
+            link: '#',
+            text: 'Documentation',
+            image: '/assets/recruitment/recruitment_documentation.png',
+            onClick: () => setExpandedCategory('documentation')
+        },
         {
             link: '#',
             text: 'Designing',
@@ -28,23 +34,29 @@ export default function PositionBoard({ categories = RECRUITMENT_CATEGORIES, onS
         },
         {
             link: '#',
-            text: 'Development',
-            image: '/assets/recruitment/recruitment_development.png',
-            onClick: () => setExpandedCategory('development')
+            text: 'Organizing',
+            image: '/assets/recruitment/recruitment_organizing.png',
+            onClick: () => setExpandedCategory('organizing')
         },
         {
             link: '#',
-            text: 'Marketing',
-            image: '/assets/recruitment/recruitment_marketing.png',
-            onClick: () => setExpandedCategory('marketing')
+            text: 'Technical',
+            image: '/assets/recruitment/recruitment_technical.png',
+            onClick: () => setExpandedCategory('technical')
         },
         {
             link: '#',
-            text: 'Operations',
-            image: '/assets/recruitment/recruitment_operations.png',
-            onClick: () => setExpandedCategory('operations')
+            text: 'Social Media',
+            image: '/assets/recruitment/recruitment_socialmedia.png',
+            onClick: () => setExpandedCategory('socialmedia')
+        },
+        {
+            link: '#',
+            text: 'Publicity',
+            image: '/assets/recruitment/recruitment_publicity.png',
+            onClick: () => setExpandedCategory('publicity')
         }
-    ];
+    ], []);
 
     const activeCategoryData = categories.find(c => c.id === expandedCategory);
 
